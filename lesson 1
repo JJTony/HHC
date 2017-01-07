@@ -17,7 +17,6 @@ Servo baseServo ;
 
 
 
-
 void rest() {
   
   sweep(lockServo,lockServo.read(),lockOpen,15) ; 
@@ -80,25 +79,11 @@ void trayRelease() {
     delay(2000);
 }
 void baseMove(int jd) {
-   Serial.println("basemove jd");
-    Serial.println(jd);
+  
   sweep(baseServo,baseServo.read(),jd,15);
 }
-void armMove(int jd) {
-   Serial.println("armmove jd");
-    Serial.println(jd);
-  sweep(armServo,armServo.read(),jd,15);
-}
-void trayMove(int jd) {
-   Serial.println("traymove jd");
-    Serial.println(jd);
-  sweep(trayServo,trayServo.read(),jd,15);
-}
-void lockMove(int jd) {
-   Serial.println("lockmove jd");
-    Serial.println(jd);
-  sweep(lockServo,lockServo.read(),jd,15);
-}
+
+
 
 void setup() {
 Serial.begin(9600);
@@ -138,8 +123,23 @@ sweep(trayServo,0,180,15);
     Serial.println("Going to loop");
 }
 
+int auto_shoot(int jd)
+{
+baseMove(jd);///This is my magic!!
+   trayRelease(); 
+  rest() ; 
+  prepareToShoot() ;  
+  shoot(); 
+  rest();
+    Serial.println("tray is moving");
+       Serial.println(trayServo.read());
+  Serial.println("I've pritened the trayServo position");
+}
+
+
+
 void loop() {
-  int basa1;
+ int basa1;
   int basa2;
   int basa3;
   int basa4;
@@ -159,27 +159,6 @@ void loop() {
  Serial.println(basa4);
  Serial.println(basa5);
  Serial.println(basa6);
- baseMove(basa2);
- armMove(basa3);
- lockMove(basa4);
- trayMove(basa5);
+auto_shoot(basa2);
 }
-}
-
-void machine_controler(int basa1)
-{baseMove(basa1);///This is my magic!!
-   trayRelease(); 
-  rest() ; 
-  prepareToShoot() ;  
-  shoot(); 
-  rest();
-    Serial.println("tray is moving");
-       Serial.println(trayServo.read());
-  Serial.println("I've pritened the trayServo position");
-   trayRelease(); 
-  rest() ; 
-    Serial.println("base is moving");
-       Serial.println(baseServo.read());
-  Serial.println("I've pritened the baseServo position");
-  
 }
