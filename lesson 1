@@ -123,13 +123,15 @@ sweep(trayServo,0,180,15);
     Serial.println("Going to loop");
 }
 
-int auto_shoot(int jd,int aarm)
+int auto_run(int jd,int aarm,int shoot)
 {
 baseMove(jd);///This is my magic!!
    trayRelease(); 
   rest() ; 
   prepareToShoot(aarm) ;  
-  shoot(); 
+  if(shoot==1){
+  shoot();
+  }
   rest();
     Serial.println("tray is moving");
        Serial.println(trayServo.read());
@@ -159,8 +161,6 @@ void loop() {
  Serial.println(basa4);
  Serial.println(basa5);
  Serial.println(basa6);
- if(basa4=1)
- {auto_shoot(basa2,basa3);
-
+ auto_run(basa2,basa3,basa4);
 }
 }
