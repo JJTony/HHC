@@ -1,3 +1,4 @@
+
 #include <Servo.h>
 
 Servo lockServo ; 
@@ -27,7 +28,7 @@ void rest() {
 void prepareToShoot(int armArm) {
 
   sweep(lockServo,lockServo.read(),lockClosed,15) ; 
-  sweep(armServo,armServo.read(),armArm,5) ; 
+  sweep(armServo,armServo.read(),(180-armArm)/2,5) ; 
   
 }
 
@@ -80,7 +81,7 @@ void trayRelease() {
 }
 void baseMove(int jd) {
   
-  sweep(baseServo,baseServo.read(),jd,15);
+  sweep(baseServo,baseServo.read(),jd*90/1xx 00+10,15);
 }
 
 
@@ -91,6 +92,7 @@ Serial.begin(9600);
 
   lockServo.attach(3); 
   armServo.attach(5) ; 
+
   trayServo.attach(6);
   baseServo.attach(9) ;  
  Serial.begin(9600);
@@ -108,6 +110,7 @@ sweep(armServo,0,180,15);
 sweep(trayServo,0,180,15);
 
   trayClose();   
+
   delay(250); /// you have time to load bullets
   trayRelease(); 
    Serial.begin(9600);
@@ -116,23 +119,27 @@ sweep(trayServo,0,180,15);
   
   
   rest() ; 
-  prepareToShoot(basa3) ;  
+  prepareToShoot(armArmed) ;  
   shoot(); 
   rest(); 
  Serial.begin(9600);
     Serial.println("Going to loop");
 }
 
-int auto_run(int jd,int aarm,int shoot)
+int auto_run(int jd,int aarm,int shooting)
 {
-baseMove(jd);///This is my magic!!
+
+  baseMove(jd);///This is my magic!!
    trayRelease(); 
-  rest() ; 
   prepareToShoot(aarm) ;  
-  if(shoot==1){
+  Serial.println ("auto_runint jd,int aarm,int shooting");
+       Serial.println(jd);
+             Serial.println(aarm);
+                   Serial.println(shooting);
+  if(shooting==1){
   shoot();
-  }
   rest();
+  }
     Serial.println("tray is moving");
        Serial.println(trayServo.read());
   Serial.println("I've pritened the trayServo position");
