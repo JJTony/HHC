@@ -24,10 +24,10 @@ void rest() {
  
 }
 
-void prepareToShoot() {
+void prepareToShoot(int armArm) {
 
   sweep(lockServo,lockServo.read(),lockClosed,15) ; 
-  sweep(armServo,armServo.read(),armArmed,5) ; 
+  sweep(armServo,armServo.read(),armArm,5) ; 
   
 }
 
@@ -116,19 +116,19 @@ sweep(trayServo,0,180,15);
   
   
   rest() ; 
-  prepareToShoot() ;  
+  prepareToShoot(basa3) ;  
   shoot(); 
   rest(); 
  Serial.begin(9600);
     Serial.println("Going to loop");
 }
 
-int auto_shoot(int jd)
+int auto_shoot(int jd,int aarm)
 {
 baseMove(jd);///This is my magic!!
    trayRelease(); 
   rest() ; 
-  prepareToShoot() ;  
+  prepareToShoot(aarm) ;  
   shoot(); 
   rest();
     Serial.println("tray is moving");
@@ -159,6 +159,8 @@ void loop() {
  Serial.println(basa4);
  Serial.println(basa5);
  Serial.println(basa6);
-auto_shoot(basa2);
+ if(basa4=1)
+ {auto_shoot(basa2,basa3);
+
 }
 }
