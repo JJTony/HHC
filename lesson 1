@@ -26,10 +26,12 @@ void rest() {
 }
 
 void prepareToShoot(int armArm) {
-
-  sweep(lockServo,lockServo.read(),lockClosed,15) ; 
-  sweep(armServo,armServo.read(),(180-armArm)/2,5) ; 
-  
+  int armshoot;
+  armshoot=(180-armArm)/3;
+  sweep(lockServo,lockClosed,lockClosed,15) ; 
+  sweep(armServo,armshoot,armshoot,5) ; 
+  Serial.println("armshoot:");
+  Serial.println(armshoot);
 }
 
 void shoot() {
@@ -81,7 +83,7 @@ void trayRelease() {
 }
 void baseMove(int jd) {
   
-  sweep(baseServo,baseServo.read(),jd*90/1xx 00+10,15);
+  sweep(baseServo,baseServo.read(),jd*90/100+10,15);
 }
 
 
@@ -136,7 +138,7 @@ int auto_run(int jd,int aarm,int shooting)
        Serial.println(jd);
              Serial.println(aarm);
                    Serial.println(shooting);
-  if(shooting==1){
+  if(shooting>=90){
   shoot();
   rest();
   }
